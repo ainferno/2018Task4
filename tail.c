@@ -13,7 +13,7 @@ flags(1,1) - -n +<number>
 */
 int main(int argc, char* argv[])
 {
-    int words[(argc > 1) ? argc-1 : 1], words_number = argc - 1, flags[2] = {0, 0}, n_argument;
+    int words[(argc > 1) ? argc-1 : 1], words_number = argc - 1, flags[2] = {0, 0}, n_argument, first = 1;
     for(int i = 0;i < argc-1;i++)
         words[i] = 1;
     for(int i = 1;i < argc;i++)
@@ -26,22 +26,22 @@ int main(int argc, char* argv[])
                 return -1;
             }
             flags[0] = 1;
-            words[i] = 0;
+            words[i-1] = 0;
             words_number--;
-            i++;
-            if(argc == i)
+            if(argc == i+1)
             {
                 write(2,"Error, Tail: option require an argument -- 'n'\n", 47); 
                 return -1;
             }
-            if((n_argument = is_nat(argv[i])) == -1)
+            if((n_argument = is_nat(argv[++i])) == -1)
             {
                 write(2,"Error, Tail: option require an argument -- 'n'\n", 47); 
                 return -1;
             }
+
             if(argv[i][0] == '+')
                 flags[1] = 1;
-            words[i] = 0;
+            words[i-1] = 0;
             words_number--;
         }
     }
@@ -56,15 +56,26 @@ int main(int argc, char* argv[])
         clean_string_list(str_lst);
         return 1;
     }
-    for(int i = 0;i < words_number;i++)
+    for(int i = 1;i < argc;i++)
     {
-        if(words[i])
+        if(words[i-1])
         {
+            // printf("FILE: %s\n", argv[i]);
+            if(words_number > 1)
+            {
+                if(first)
+                    first = 0;
+                else
+                    write(1, "\n", 1);
+                write(1, "==> ", 4);
+                write(1,argv[i], strlen(argv[i]));
+                write(1, " <==\n", 5);
+            }
             str_lst = init_string_list();
-            f = open(argv[1], O_RDONLY);
+            f = open(argv[i], O_RDONLY);
             if(f < 0)
             {
-                write(2,"Error! Tail: cannot open 'test2' for reading: No such file or directory\n", 72);
+                write(2,"Error! Tail: cannot open file for reading: No such file or directory\n", 69);
                 return -1;
             }
             dup2(f, 0);
