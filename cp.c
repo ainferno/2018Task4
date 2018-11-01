@@ -36,6 +36,11 @@ int main(int argc, char* argv[])
     }
     struct stat stbuf;
     stat(argv[1], &stbuf);
+    if(stbuf.st_mode == S_IFDIR)
+    {
+        write(2,"Error,CP ommiting directory!\n", 29);
+        return -1;
+    }
     int f1 = open(argv[1], O_RDONLY), f2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, stbuf.st_mode);
     char buf[100];
     int n = 0;
