@@ -62,12 +62,12 @@ int main(int argc, char* argv[])
         clean_string_list(str_lst);
         return 1;
     }
-    for(int i = 0;i < words_number;i++)
+    for(int i = 1;i < argc;i++)
     {
-        if(words[i])
+        if(words[i-1])
         {
             str_lst = init_string_list();
-            f = open(argv[1], O_RDONLY);
+            f = open(argv[i], O_RDONLY);
             if(f < 0)
             {
                 write(2,"Error! Tail: cannot open 'test2' for reading: No such file or directory\n", 72);

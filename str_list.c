@@ -42,58 +42,27 @@ char down_char(char a)
 {
     return (a >= 'A' && a <= 'Z') ? a : a - ('a' - 'A');
 }
-int str_cmp(char* a, char* b, int r, int f, int n)
+int str_cmp (char *a, char *b, int r, int f, int n) /*string comparison with -f inclusion*/
 {
-    int i = 0, j = 0, result = 0, a_len = strlen(a), b_len = strlen(b);
-    char x, y;
-    if(a[a_len-1] != '\n')
-        a[a_len] = '\n';
-    if(b[b_len-1] != '\n')
-        b[b_len] = '\n';
-    if(n)
+    int i = 0;
+    if(f)
     {
-        if(a_len > b_len)
-            result = 1;
-        else if(a_len < b_len)
-            result = -1;
+        for(;(unsigned)down_char(a[i]) == (unsigned)down_char(b[i]); i++)
+            if (a[i] == '\0')
+                return 0;
+        return (((unsigned)down_char(a[i]))-((unsigned)down_char(b[i]))) * (1 - 2 * r);
+    }
+    else if(n)
+    {
+        for(; a[i] == b[i]; i++)
+            if (a[i] == '\0')
+                return 0;
+        return (unsigned)(a[i] - b[i]) * (1 - 2 * r);    
     }
     else
-    {
-        for(;i < a_len;i++)
-        {
-            if(f)
-            {
-                x = down_char(a[i]);
-                y = down_char(b[i]);
-                if(x > y)
-                {
-                    result = 1;
-                    break;
-                }
-                if(x < y)
-                {
-                    result = -1;
-                    break;
-                }
-            }
-            else
-            {
-                if(a[i] > b[i])
-                {
-                    result = 1;
-                    break;
-                }
-                if(a[i] < b[i])
-                {
-                    result = -1;
-                    break;
-                }
-            }
-        }
-    }
-
-    return r ? -result : result;
+        return strcmp(a,b) * (1 - 2 * r);
 }
+
 string_struct add_string_list(string_struct str, char *elem, int elem_size)
 {
     if(str.size_current+1 == str.size)//Если выходим за пределы массива то перевыделяем память под него

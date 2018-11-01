@@ -1,8 +1,10 @@
-all: echo pwd cp sort tail
+all: echo pwd ls cp sort tail
 echo: echo.c
 	gcc -g -o echo echo.c
 pwd: pwd.c
 	gcc -g -o pwd pwd.c
+ls: ls.c
+	gcc -g -o ls ls.c
 cp: cp.c
 	gcc -g -o cp cp.c
 tail: tail.o help.o str_list.o
@@ -18,4 +20,4 @@ help.o: help.c help.h sh.h
 str_list.o: str_list.c sh.h
 	gcc -c str_list.c
 clean:
-	rm echo pwd cp sort tail *.o
+	rm echo pwd ls cp sort tail *.o
