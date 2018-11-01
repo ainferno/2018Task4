@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 int str_eq(char* a, char* b)
 {
@@ -33,7 +34,9 @@ int main(int argc, char* argv[])
         write(2,"Error,CP same arguments!\n", 25);
         return -1;
     }
-    int f1 = open(argv[1], O_RDONLY), f2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    struct stat stbuf;
+    stat(argv[1], &stbuf);
+    int f1 = open(argv[1], O_RDONLY), f2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, stbuf.st_mode);
     char buf[100];
     int n = 0;
     while((n = read(f1, buf, 100)) > 0)

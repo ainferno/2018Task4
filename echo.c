@@ -7,13 +7,6 @@ flags[0] = -n = now newline
 flags[1] = -e = enable backslash escapes = 1, -E = disable backslash escapes = 0
 */
 
-int str_eq(char* a, char* b)
-{
-    for(;*a == *b;*a++,*b++)
-        if(*b == '\0')
-            return 1;
-    return 0;
-}
 int is_oct_digit(char a)
 {
     return (a >= '0') && (a <= '7');
@@ -87,7 +80,6 @@ int backslash_seq(char* word)
                     break;
                 default:
                     word2[i] = '\\';
-                    j--;
                     break;
             }
             j++;
@@ -107,19 +99,19 @@ int main(int argc, char* argv[])
         words[i] = 1;
     for(int i = 1;i < argc;i++)
     {
-        if(str_eq(argv[i], "-e"))
+        if(strcmp(argv[i], "-e") == 0)
         {
             words[i-1] = 0;
             words_number--;
             flags[1] = 1;
         }
-        if(str_eq(argv[i], "-E"))
+        if(strcmp(argv[i], "-E") == 0)
         {
             words[i-1] = 0;
             words_number--;
             flags[1] = 0;
         }
-        if(str_eq(argv[i], "-n"))
+        if(strcmp(argv[i], "-n") == 0)
         {
             words[i-1] = 0;
             words_number--;
