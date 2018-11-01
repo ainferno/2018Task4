@@ -105,18 +105,20 @@ int main(int argc, char* argv[])
             words_number--;
             flags[1] = 1;
         }
-        if(strcmp(argv[i], "-E") == 0)
+        else if(strcmp(argv[i], "-E") == 0)
         {
             words[i-1] = 0;
             words_number--;
             flags[1] = 0;
         }
-        if(strcmp(argv[i], "-n") == 0)
+        else if(strcmp(argv[i], "-n") == 0)
         {
             words[i-1] = 0;
             words_number--;
             flags[0] = 1;
         }
+        else
+            break;
     }
     for(int i = 1, j = 0;i < argc;i++)
     {
