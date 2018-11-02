@@ -12,29 +12,6 @@ void display_file_type (int);
 void Directions(DIR*,int, int);
 int flags(int ,char**, int*, int*);
 
-char* int_to_char(long int a)
-{
-    char c1[30];
-    char* c2;
-    c2 = (char*)malloc(sizeof(char) * 30);
-    int i = 0, j = 0, n;
-    if(a == 0)
-    {
-        c2[0] = '0';
-        c2[1] = '\0';
-    }
-    else
-    {
-        for(;a > 0;i++,a/=10)
-            c1[i] = a%10 + '0';
-        n = i--;
-        for(;j < n;j++,i--)
-            c2[j] = c1[i];
-        c2[j] = '\0';
-    }
-    return c2;
-}
-
 void display_permission ( int st_mode )  //Процедура, которая выписывает права
 {
     static const char xtbl[10] = "rwxrwxrwx";
@@ -82,8 +59,7 @@ void Directions(DIR *dir,int l,int g) //Рекурсивная процедур�
     struct stat buf;
     struct passwd  *pw_d;
     int i,j = 0,k = 0;
-    char* name[1000];
-    char* num;
+    char *name[1000];
 
     while ( (entry = readdir(dir)) != NULL) 
     {
@@ -101,24 +77,18 @@ void Directions(DIR *dir,int l,int g) //Рекурсивная процедур�
             display_file_type(buf.st_mode); //Выводим тип файла.
             display_permission (buf.st_mode); //Выводим права пользователя.
             pw_d = getpwuid ( buf.st_uid ); //Получаем и выводим имя пользователя.
-            write(1, pw_d->pw_name, strlen(pw_d->pw_name));
+            printf(" %s",pw_d->pw_name);
             if(g) 
             {
                 pw_d = getpwuid ( buf.st_gid ); //Если -g = 1 получаем и выводим имя группы.
-                write(1, " ", 1);
-                write(1, pw_d->pw_name, strlen(pw_d->pw_name));
+                printf(" %s",pw_d->pw_name);
             }
-            num = int_to_char(buf.st_size);
-            write(1, " ", 1);
-            write(1, num, strlen(num));
-            free(num);
+            printf(" %ld",buf.st_size); //Выводим размер файла.
         }
-        write(1, " ", 1);
-        write(1, name[k], strlen(name[k]));
-        write(1, "\n", 1);
+        printf(" %s\n",name[k]); //Выводим имя.
         if((buf.st_mode & S_IFMT) == S_IFDIR) //Рекурсивно обходим директории.
         {
-            dir = opendir(name[k]);
+            dir=opendir(name[k]);
             chdir(name[k]);
             Directions(dir,l,g);
             chdir("..");
@@ -167,7 +137,6 @@ int main(int argc,char *argv[])
     int i,flags[3] = {0, 0, 0}, j = 0, k = 0;
     char c;
     char* s;
-    char* num;
     char** name = (char**)malloc(sizeof(char)*BUFSIZ);
 
     i = get_flags(argc,argv,flags);
@@ -187,18 +156,12 @@ int main(int argc,char *argv[])
                 while ((entry = readdir(dir)) != NULL) 
                 {
                     if(entry->d_name[0] != '.')
-                    {
-                        write(1, entry->d_name, strlen(entry->d_name));
-                        write(1, "\n", 1);
-                    }
+                        printf("%s\n",entry->d_name);
                 }
                 closedir(dir);
             }
             else
-            {
-                write(1, argv[i], strlen(argv[i]));
-                write(1, "\n", 1);
-            }
+                printf("%s\n",argv[i]);
         }
         if(flags[0])
         {
@@ -223,30 +186,20 @@ int main(int argc,char *argv[])
                         display_file_type(buf.st_mode); //Выводим тип файла.
                         display_permission (buf.st_mode); //Выводим права пользователя.
                         pw_d = getpwuid ( buf.st_uid ); //Выводим имя пользователя.
-                        write(1, " ", 1);
-                        write(1, pw_d->pw_name, strlen(pw_d->pw_name));
+                        printf(" %s",pw_d->pw_name);
                         if(flags[2]) 
                         {
                             pw_d = getpwuid (buf.st_gid); //Если поднят -g выводим имя группы.
-                            write(1, " ", 1);
-                            write(1, pw_d->pw_name, strlen(pw_d->pw_name));
+                            printf(" %s",pw_d->pw_name);
                         }
-                        num = int_to_char(buf.st_size);
-                        write(1, " ", 1);
-                        write(1, num, strlen(num));
-                        write(1, " ", 1);
-                        write(1, entry->d_name, strlen(entry->d_name));
-                        write(1, "\n", 1);
-                        free(num);
+                        printf(" %ld",buf.st_size); //Выводим размер.
+                        printf(" %s\n",entry->d_name); //Выводим имя.
                     }
                 }
                 chdir("..");
             }
             else
-            {
-                write(1, argv[i], strlen(argv[i]));
-                write(1, "\n", 1);
-            }
+                printf("%s\n",argv[i]);
             closedir(dir);
         }
     }
