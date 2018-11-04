@@ -42,6 +42,8 @@ string_struct input(string_struct lst)
         }
         if(c == '\n')
             str[i++] = c;
+        // if((n = read(0, &c, 1)) = 0)
+        //     str[i++] = '\n';
         if(i > 0)
         {
             str[i] = '\0';

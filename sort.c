@@ -76,10 +76,10 @@ int main(int argc, char* argv[])
             dup2(f, 0);
             close(f);
             str_lst = input(str_lst);
-            sort_sort_list(str_lst, n_argument, flags);
-            print_string_list(str_lst);
-            clean_string_list(str_lst);
         }
     }
+    sort_sort_list(str_lst, n_argument, flags);
+    print_string_list(str_lst);
+    clean_string_list(str_lst);
     return 0;
 }
