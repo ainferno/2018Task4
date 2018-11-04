@@ -120,8 +120,9 @@ void Directions(DIR *dir,int l,int g) //Рекурсивная процедур�
         {
             dir = opendir(name[k]);
             chdir(name[k]);
-            Directions(dir,l,g);
             chdir("..");
+            printf("\n >>>> \n");
+            Directions(dir,l,g);
             closedir(dir);
         }
     }

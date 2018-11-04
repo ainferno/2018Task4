@@ -1,0 +1,143 @@
+
+
+
+
+
+
+                        c = c * 16 + word[++j] - '0';
+                        c = c * 8 + word[++j] - '0';
+                        c = c * 8 + word[++j] - '0';
+                        c = word[++j] - '0';
+                        c = word[++j] - '0';
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    break;
+                    c = 0;
+                    c = 0;
+                    if(is_hex_digit(word[j+1]))
+                    if(is_hex_digit(word[j+1]))
+                    if(is_oct_digit(word[j+1]))
+                    if(is_oct_digit(word[j+1]))
+                    if(is_oct_digit(word[j+1]))
+                    return 0;
+                    return 1;
+                    word2[i] = '\\';
+                    word2[i] = '\a';
+                    word2[i] = '\b';
+                    word2[i] = '\e';
+                    word2[i] = '\f';
+                    word2[i] = '\n';
+                    word2[i] = '\r';
+                    word2[i] = '\t';
+                    word2[i] = '\v';
+                    word2[i] = c;
+                    word2[i] = c;
+                    write(1,word2,i);
+                case '0':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'e':
+                case 'f':
+                case 'n':
+                case 'r':
+                case 't':
+                case 'v':
+                case 'x':
+                default:
+                if(backslash_seq(argv[i]))
+                write(1, " ", 1);
+                write(1, argv[i], strlen(argv[i]));
+            break;
+            else
+            flags[0] = 1;
+            flags[1] = 0;
+            flags[1] = 1;
+            if(flags[1])
+            if(j < words_number)
+            j++;
+            j++;
+            switch(word[++j])
+            word2[i] = word[j++];
+            words[i-1] = 0;
+            words[i-1] = 0;
+            words[i-1] = 0;
+            words_number--;
+            words_number--;
+            words_number--;
+            {
+            {
+            {
+            }
+            }
+            }
+        (a == 'A') || (a == 'a') ||
+        (a == 'B') || (a == 'b') ||
+        (a == 'C') || (a == 'c') ||
+        (a == 'D') || (a == 'd') ||
+        (a == 'E') || (a == 'e') ||
+        (a == 'F') || (a == 'f');
+        else
+        else
+        else if(strcmp(argv[i], "-E") == 0)
+        else if(strcmp(argv[i], "-n") == 0)
+        if(strcmp(argv[i], "-e") == 0)
+        if(word[j] == '\\' && (j+1) < word_l)
+        if(words[i-1])
+        words[i] = 1;
+        write(1, "\n", 1);
+        {
+        {
+        {
+        {
+        {
+        }
+        }
+        }
+        }
+        }
+    char word2[word_l];
+    for(int i = 0;i < argc-1;i++)
+    for(int i = 1, j = 0;i < argc;i++)
+    for(int i = 1;i < argc;i++)
+    for(int j = 0;j < word_l;i++)
+    if(!flags[0])
+    int flags[2] = {0,0}, words[argc-1], words_number = argc-1;
+    int word_l = strlen(word), i = 0, c = 0;
+    return (a >= '0') && (a <= '7');
+    return (a >= '0') && (a <= '9') || 
+    return 0;
+    return 0;
+    write(1,word2,i);
+    {
+    {
+    {
+    }
+    }
+    }
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+*/
+/*
+flags[0] = -n = now newline
+flags[1] = -e = enable backslash escapes = 1, -E = disable backslash escapes = 0
+int backslash_seq(char* word)
+int is_hex_digit(char a)
+int is_oct_digit(char a)
+int main(int argc, char* argv[])
+{
+{
+{
+{
+}}
+}
+}

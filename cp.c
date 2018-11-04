@@ -29,19 +29,23 @@ int main(int argc, char* argv[])
         }
         return -1;
     }
-    if(str_eq(argv[1], argv[2]))
-    {
-        write(2,"Error,CP same arguments!\n", 25);
-        return -1;
-    }
-    struct stat stbuf;
-    stat(argv[1], &stbuf);
-    if(stbuf.st_mode == S_IFDIR)
+    struct stat stbuf1, stbuf2;
+    stat(argv[1], &stbuf1);
+    stat(argv[2], &stbuf2);
+    if(stbuf1.st_mode == S_IFDIR)
     {
         write(2,"Error,CP ommiting directory!\n", 29);
         return -1;
     }
-    int f1 = open(argv[1], O_RDONLY), f2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, stbuf.st_mode);
+    // printf("File1: %s, ino = %ld\n", argv[1], stbuf1.st_ino);
+    // printf("File2: %s, ino = %ld\n", argv[2], stbuf2.st_ino);
+    if(stbuf1.st_rdev == stbuf2.st_rdev && 
+        stbuf1.st_ino == stbuf2.st_ino)
+    {
+        write(2,"Error,CP same arguments!\n", 25);
+        return -1;
+    }
+    int f1 = open(argv[1], O_RDONLY), f2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, stbuf1.st_mode);
     char buf[100];
     int n = 0;
     while((n = read(f1, buf, 100)) > 0)
